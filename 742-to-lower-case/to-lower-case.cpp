@@ -4,12 +4,12 @@ public:
         int start = 0;
         int end = s.size() - 1;
 
-        for(int i = start; i <= end; i++) {
-            if(s[i] >= 'A' && s[i] <= 'Z') {
-                s[i] = s[i] + 32;   // convert to lowercase
-            }
-        }
+        
+    for(int i=start; i<=end;i++){
+        if(s[i]>='A' && s[i]<='Z')
+        s[i] = s[i]+32;
+    }
+     return s;
 
-        return s;   // return modified string
     }
 };
