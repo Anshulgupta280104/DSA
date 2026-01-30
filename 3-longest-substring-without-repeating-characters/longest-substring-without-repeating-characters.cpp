@@ -1,23 +1,27 @@
-#include <bits/stdc++.h>
-using namespace std;
-
 class Solution {
 public:
     int lengthOfLongestSubstring(string s) {
-        vector<int> lastIndex(256, -1); 
-        int maxLen = 0;
-        int left = 0; 
-        
-        for(int right = 0; right < s.length(); right++) {
-            char ch = s[right];
-            
-            if(lastIndex[ch] >= left) {
-                left = lastIndex[ch] + 1;
+        vector<bool> count(256, false);
+
+        int first = 0, second = 0, len = 0;
+
+        while (second < s.size()) {
+
+            // remove duplicates
+            while (count[s[second]]) {
+                count[s[first]] = false;
+                first++;
             }
-            
-            lastIndex[ch] = right;
-            maxLen = max(maxLen, right - left + 1);
+
+            // add current char
+            count[s[second]] = true;
+
+            // update max length
+            len = max(len, second - first + 1);
+
+            second++;
         }
-        return maxLen;
+
+        return len;
     }
 };
