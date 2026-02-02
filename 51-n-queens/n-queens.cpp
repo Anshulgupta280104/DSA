@@ -1,65 +1,46 @@
 class Solution {
 public:
 
-    // check diagonals
-    bool check(int n, vector<string>& Board, int i, int j) {
-
-        int row = i, col = j;
-
-        // upper-left diagonal
-        while(row >= 0 && col >= 0) {
-            if(Board[row][col] == 'Q')
-                return false;
-            row--; col--;
-        }
-
-        // upper-right diagonal
-        row = i; col = j;
-        while(row >= 0 && col < n) {
-            if(Board[row][col] == 'Q')
-                return false;
-            row--; col++;
-        }
-
-        return true;
-    }
-
-
-    void find(int row, int n,
-              vector<vector<string>>& ans,
-              vector<string>& Board,
-              vector<bool>& column) {
+    void solve(int row, int n,
+               vector<string>& board,
+               vector<vector<string>>& ans,
+               vector<bool>& col,
+               vector<bool>& diag1,
+               vector<bool>& diag2) {
 
         if(row == n) {
-            ans.push_back(Board);
+            ans.push_back(board);
             return;
         }
 
-        for(int j = 0; j < n; j++) {
+        for(int c = 0; c < n; c++) {
 
-            if(!column[j] && check(n, Board, row, j)) {
+            // O(1) safety check
+            if(col[c] || diag1[row + c] || diag2[row - c + n - 1])
+                continue;
 
-                column[j] = true;
-                Board[row][j] = 'Q';
+            board[row][c] = 'Q';
+            col[c] = diag1[row + c] = diag2[row - c + n - 1] = true;
 
-                find(row + 1, n, ans, Board, column);
+            solve(row + 1, n, board, ans, col, diag1, diag2);
 
-                column[j] = false;   // backtrack
-                Board[row][j] = '.';
-            }
+            // backtrack
+            board[row][c] = '.';
+            col[c] = diag1[row + c] = diag2[row - c + n - 1] = false;
         }
     }
-
 
     vector<vector<string>> solveNQueens(int n) {
 
         vector<vector<string>> ans;
 
-        vector<string> Board(n, string(n, '.'));
+        vector<string> board(n, string(n, '.'));
 
-        vector<bool> column(n, false);
+        vector<bool> col(n, false);
+        vector<bool> diag1(2*n, false);
+        vector<bool> diag2(2*n, false);
 
-        find(0, n, ans, Board, column);
+        solve(0, n, board, ans, col, diag1, diag2);
 
         return ans;
     }
