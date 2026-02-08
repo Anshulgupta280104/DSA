@@ -1,19 +1,16 @@
 class Solution {
 public:
-       int fibon(int n, vector<int>&dp)
-       {
-        if(n<=1)
-        return n;
+    int fib(int n) {
+        if(n <= 1) return n;
 
-        if(dp[n]!=-1)
-        return dp[n];
+        int prev2 = 0, prev1 = 1;
 
-        return dp[n] = fibon(n-1,dp)+ fibon(n-2,dp);
-       }
+        for(int i = 2; i <= n; i++){
+            int curr = prev1 + prev2;
+            prev2 = prev1;
+            prev1 = curr;
+        }
 
-       int fib(int n ){
-
-        vector<int>dp(n+1,-1);
-        return fibon(n,dp);
-       }
+        return prev1;
+    }
 };
