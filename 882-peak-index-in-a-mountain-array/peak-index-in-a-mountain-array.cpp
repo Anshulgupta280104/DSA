@@ -6,6 +6,6 @@ public:
                 return i;
             }
         }
-        return -1;
+       return arr.size() - 1; 
     }
 };
