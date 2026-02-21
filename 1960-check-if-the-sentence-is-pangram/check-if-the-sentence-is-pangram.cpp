@@ -8,8 +8,8 @@ public:
         }
         for(int i=0;i<26;i++)
         if(alpha[i]==0)
-        return 0;
+        return false;
     
-    return 1;
+    return true;
     }
 };
