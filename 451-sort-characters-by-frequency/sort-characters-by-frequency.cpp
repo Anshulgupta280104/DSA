@@ -4,29 +4,26 @@ public:
         
         unordered_map<char,int> mp;
 
-        // Count frequency
+        // Step 1: Count frequency
         for(char c : s)
-            mp[c]++;
-
-        int n = s.size();
-
-        // Create buckets
-        vector<vector<char>> bucket(n + 1);
-
-        for(auto &p : mp)
         {
-            bucket[p.second].push_back(p.first);
+            mp[c]++;
         }
 
+        // Step 2: Move to vector
+        vector<pair<char,int>> vec(mp.begin(), mp.end());
+
+        // Step 3: Sort by frequency
+        sort(vec.begin(), vec.end(), [](auto &a, auto &b){
+            return a.second > b.second;
+        });
+
+        // Step 4: Build result
         string ans = "";
 
-        // Traverse from high frequency
-        for(int i = n; i >= 1; i--)
+        for(auto &p : vec)
         {
-            for(char c : bucket[i])
-            {
-                ans += string(i, c);
-            }
+            ans += string(p.second, p.first);
         }
 
         return ans;
