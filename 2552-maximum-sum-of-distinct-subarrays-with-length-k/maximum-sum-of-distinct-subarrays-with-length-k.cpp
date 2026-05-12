@@ -15,7 +15,7 @@ public:
             sum += nums[j];
             mp[nums[j]]++;
 
-            // window size becomes greater than k
+            // Shrink window if size > k
             if (j - i + 1 > k) {
 
                 sum -= nums[i];
@@ -29,10 +29,10 @@ public:
                 i++;
             }
 
-            // valid window of size k
+            // Window size == k
             if (j - i + 1 == k) {
 
-                // all elements distinct
+                // All elements are distinct
                 if (mp.size() == k) {
                     maxi = max(maxi, sum);
                 }
