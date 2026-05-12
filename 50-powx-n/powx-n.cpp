@@ -7,13 +7,14 @@ public:
         if(n == 0)
             return 1;
 
+        // recursive call
         double half = solve(x, n / 2);
 
-        // even power
+        // if power is even
         if(n % 2 == 0)
             return half * half;
 
-        // odd power
+        // if power is odd
         else
             return x * half * half;
     }
@@ -22,7 +23,7 @@ public:
 
         long long N = n;
 
-        // handle negative power
+        // handle negative powers
         if(N < 0)
         {
             x = 1 / x;
