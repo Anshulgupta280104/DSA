@@ -3,22 +3,26 @@ public:
     bool isValid(string s) {
         stack<char> st;
 
-        for(char c : s) {
-            // push opening brackets
-            if(c == '(' || c == '{' || c == '[') {
-                st.push(c);
+        for(char ch : s) {
+
+            if(ch == '(' || ch == '{' || ch == '[') {
+                st.push(ch);
+                continue;
             }
-            else {
-                if(st.empty()) return false;
 
-                char top = st.top();
-                st.pop();
+            if(st.empty()) return false;
 
-                if((c == ')' && top != '(') ||
-                   (c == '}' && top != '{') ||
-                   (c == ']' && top != '[')) {
-                    return false;
-                }
+            if(ch == ')') {
+                if(st.top() == '(') st.pop();
+                else return false;
+            }
+            else if(ch == '}') {
+                if(st.top() == '{') st.pop();
+                else return false;
+            }
+            else if(ch == ']') {
+                if(st.top() == '[') st.pop();
+                else return false;
             }
         }
 
